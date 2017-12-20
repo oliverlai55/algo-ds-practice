@@ -8,6 +8,12 @@
 //   reverseInt(-15) === -51
 //   reverseInt(-90) === -9
 
-function reverseInt(n) {}
+function reverseInt(n) {
+  n.split('').sort((a, b) => {
+    return b + a
+  })
+}
 
 module.exports = reverseInt;
+
+// jest reverseint/test.js --watch
