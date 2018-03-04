@@ -8,6 +8,7 @@
 // Example:
 //   fib(4) === 3
 
+// Exponential time solution (BAD)
 // function fib(n) {
 // 	const result = [0, 1];
 //
@@ -21,12 +22,30 @@
 // 	return result[n];
 // }
 
-function fib(n) {
+function memoize(fn) {
+	const cache = {};
+	// we don't know the number of args, we just take everything and assign it to 'args'
+	return function(...args) {
+		// caching so we don't repeat, if we've called slowFib before
+		if (cache[args]) {
+			return cache[args];
+		}
+
+		const result = fn.apply(this, args);
+		cache[args] = result;
+
+		return result;
+	};
+}
+
+function slowFib(n) {
 	if (n < 2) {
 		return n;
 	}
 
 	return fib(n - 1) + fib(n - 2);
 }
+
+const fib = memoize(slowFib);
 
 module.exports = fib;
